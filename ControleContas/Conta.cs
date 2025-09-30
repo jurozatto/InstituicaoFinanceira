@@ -48,6 +48,16 @@ namespace ControleContas
                 }
 
             }
+
+        public void Depositar(decimal value)
+        {
+            if (value < 0)
+            {
+                Console.WriteLine("valor negativo");
+                return;
+            }
+            _saldo += value;
+        }
       
         
     }
