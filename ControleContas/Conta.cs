@@ -103,6 +103,28 @@ namespace ControleContas
             this.Titular = titular ?? throw new ArgumentNullException(nameof(titular), "A conta precisa de um titular.");
         }
 
+        public decimal Sacar(decimal valor)
+        {
+            if (valor <= 0)
+            {
+                Console.WriteLine("Valor inválido para saque!");
+                return _saldo;
+            }
+
+            if (valor > _saldo)
+            {
+                Console.WriteLine("Saldo insuficiente para realizar o saque!");
+                return _saldo;
+            }
+
+            _saldo -= valor;
+            _saldoTotalGeral -= valor;
+
+            AtualizarContaMaiorSaldo();
+            return _saldo;
+        }
+
+
     }
 
 

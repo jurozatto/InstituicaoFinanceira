@@ -14,7 +14,12 @@ Console.WriteLine($"\nTitular: {cliente1.Nome} (CPF: {cliente1.CPF})");
 Console.WriteLine($"Conta 1: número = {conta1.Numero}, saldo = {conta1.Saldo:C}");
 Console.WriteLine($"Conta 2: número = {conta2.Numero}, saldo = {conta2.Saldo:C}");
 
+Console.WriteLine($"Saldo após depósito: {conta1.Saldo:C}");
 
+conta1.Sacar(300m);
+Console.WriteLine($"Saldo após saque: {conta1.Saldo:C}");
+
+conta1.Sacar(800m);
 
 decimal totalContas = conta1.Saldo + conta2.Saldo;
 Console.WriteLine($"\nSaldo total das duas contas: {totalContas:C}");
