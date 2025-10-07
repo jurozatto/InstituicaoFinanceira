@@ -35,7 +35,7 @@ namespace ControleContas
             AtualizarContaMaiorSaldo();
         }
 
-        
+
         private long _numero; //long é um tipo inteiro maior | com private significa que o número da conta pode ser acessado somente dentro da classe (dá erro na classe)
         public long Numero
         {
@@ -51,19 +51,19 @@ namespace ControleContas
         }
 
 
-            public decimal _saldo;
-            public decimal Saldo
+        public decimal _saldo;
+        public decimal Saldo
+        {
+            get
             {
-                get
-                {
-                    return _saldo;
-                }
-                private set
-                {
-                    _saldo = value;
-                }
-
+                return _saldo;
             }
+            private set
+            {
+                _saldo = value;
+            }
+
+        }
 
         public void Depositar(decimal value)
         {
@@ -143,6 +143,28 @@ namespace ControleContas
             Console.WriteLine($"Saldo da conta {Numero}: R${_saldo:F2}");
             Console.WriteLine($"Saldo da conta {contaDestino.Numero}: R${contaDestino._saldo:F2}");
 
+            AtualizarContaMaiorSaldo();
+        }
+
+        public Agencia Agencia { get; private set; }
+
+        public Conta(long numero, decimal saldoInicial, Cliente titular, Agencia agencia)
+        {
+            if (titular == null)
+                throw new ArgumentNullException(nameof(titular), "A conta precisa de um titular.");
+
+            if (agencia == null)
+                throw new ArgumentNullException(nameof(agencia), "A conta precisa pertencer a uma agência.");
+
+            if (saldoInicial <= 10)
+                throw new ArgumentException("O saldo inicial deve ser superior a R$10,00.");
+
+            _numero = numero;
+            _saldo = saldoInicial;
+            Titular = titular;
+            Agencia = agencia;
+
+            _saldoTotalGeral += saldoInicial;
             AtualizarContaMaiorSaldo();
         }
     }

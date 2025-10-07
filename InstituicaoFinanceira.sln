@@ -5,7 +5,7 @@ VisualStudioVersion = 17.8.34511.84
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ControleContas", "ControleContas\ControleContas.csproj", "{3148C5AC-1304-436B-B5C2-6EEFCF088358}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TesteConta", "TesteConta\TesteConta.csproj", "{A374551B-9F40-4EB5-8AA9-0660B80190D7}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Testes", "TesteConta\Testes.csproj", "{A374551B-9F40-4EB5-8AA9-0660B80190D7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
