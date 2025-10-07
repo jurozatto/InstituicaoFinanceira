@@ -2,35 +2,36 @@
 using System;
 
 Cliente cliente1 = new Cliente("Júlia", "12345678901", 2005);
-cliente1.MostrarDados();
+Cliente cliente2 = new Cliente("Cristiane", "98765432100", 1978);
 
-Conta conta1 = new Conta(123456789, cliente1);
-Conta conta2 = new Conta(654321, cliente1);
+Conta conta1 = new Conta(123456789, 1000m, cliente1);
+Conta conta2 = new Conta(654321, 2341.42m, cliente2);
 
-conta1.Depositar(1000m);
-conta2.Depositar(2341.42m);
+Console.WriteLine("\n=== Situação Inicial ===");
+Console.WriteLine($"Conta 1 - Número: {conta1.Numero}, Titular: {conta1.Titular.Nome}, Saldo: {conta1.Saldo:C}");
+Console.WriteLine($"Conta 2 - Número: {conta2.Numero}, Titular: {conta2.Titular.Nome}, Saldo: {conta2.Saldo:C}");
 
-Console.WriteLine($"\nTitular: {cliente1.Nome} (CPF: {cliente1.CPF})");
-Console.WriteLine($"Conta 1: número = {conta1.Numero}, saldo = {conta1.Saldo:C}");
-Console.WriteLine($"Conta 2: número = {conta2.Numero}, saldo = {conta2.Saldo:C}");
-
-Console.WriteLine($"Saldo após depósito: {conta1.Saldo:C}");
-
+//Sacar
+Console.WriteLine("\n=== Realizando Saque ===");
 conta1.Sacar(300m);
-Console.WriteLine($"Saldo após saque: {conta1.Saldo:C}");
 
-conta1.Sacar(800m);
+//Transferir
+Console.WriteLine("\n=== Transferência ===");
+conta1.Transferir(200m, conta2);
+
+//Depositar
+Console.WriteLine("\n=== Depósito ===");
+conta2.Depositar(500m);
+
+//Final
+Console.WriteLine("\n=== Situação Final ===");
+Console.WriteLine($"Conta 1 - Número: {conta1.Numero}, Titular: {conta1.Titular.Nome}, Saldo: {conta1.Saldo:C}");
+Console.WriteLine($"Conta 2 - Número: {conta2.Numero}, Titular: {conta2.Titular.Nome}, Saldo: {conta2.Saldo:C}");
 
 decimal totalContas = conta1.Saldo + conta2.Saldo;
 Console.WriteLine($"\nSaldo total das duas contas: {totalContas:C}");
-
-
-//Conta com maior saldo
-Console.WriteLine($"\nConta com maior saldo: {Conta.ContaMaiorSaldo.Numero} (Saldo: {Conta.ContaMaiorSaldo.Saldo:C})");
-
-
-// Saldo total geral
-Console.WriteLine($"\nSaldo total geral atual: {Conta.SaldoTotalGeral:C}");
+Console.WriteLine($"Conta com maior saldo: {Conta.ContaMaiorSaldo.Numero} (Saldo: {Conta.ContaMaiorSaldo.Saldo:C})");
+Console.WriteLine($"Saldo total geral atual: {Conta.SaldoTotalGeral:C}");
 
 
 

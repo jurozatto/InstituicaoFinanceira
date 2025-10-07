@@ -13,17 +13,26 @@ namespace ControleContas
         private static decimal _saldoTotalGeral = 0;
         private static Conta _contaMaiorSaldo = null;
 
+        public Cliente Titular { get; private set; }
 
-
-
-        public Conta(long numero) //construtor default (mesmo nome da classe), a assinatura deste e do segundo é diferente, esse recebe long numero e o outro nada | não tem retorno pois constroi a classe
+        public Conta(long numero, decimal saldoInicial, Cliente titular)
         {
-            this.Numero = numero;
-        }
+            if (saldoInicial <= 10)
+            {
+                throw new ArgumentNullException("O saldo inicial deve ser superior a R$10,00.");
+            }
 
-        public Conta()
-        {
-            _numero = new Random().Next(100000000, 999999999);
+            if (titular == null)
+            {
+                throw new ArgumentNullException(nameof(titular), "A conta precisa de um titular.");
+            }
+
+            _numero = numero;
+            _saldo = saldoInicial;
+            Titular = titular;
+
+            _saldoTotalGeral += saldoInicial;
+            AtualizarContaMaiorSaldo();
         }
 
         
@@ -87,47 +96,56 @@ namespace ControleContas
             }
         }
 
-        public Cliente Titular { get; private set; }
-
-
-        // Construtor com cliente
-        public Conta(long numero, Cliente titular)
-        {
-            this.Numero = numero;
-            this.Titular = titular ?? throw new ArgumentNullException(nameof(titular), "A conta precisa de um titular.");
-        }
-
-        public Conta(Cliente titular)
-        {
-            _numero = new Random().Next(100000000, 999999999);
-            this.Titular = titular ?? throw new ArgumentNullException(nameof(titular), "A conta precisa de um titular.");
-        }
 
         public decimal Sacar(decimal valor)
         {
+            const decimal taxa = 0.10m;
+            decimal total = valor + taxa;
+
             if (valor <= 0)
             {
                 Console.WriteLine("Valor inválido para saque!");
                 return _saldo;
             }
 
-            if (valor > _saldo)
+            if (total > _saldo)
             {
                 Console.WriteLine("Saldo insuficiente para realizar o saque!");
                 return _saldo;
             }
 
-            _saldo -= valor;
-            _saldoTotalGeral -= valor;
+            _saldo -= total;
+            _saldoTotalGeral -= total;
 
+            Console.WriteLine($"Saque de R${valor:F2} realizado com taxa de R$0,10. Novo saldo: R${_saldo:F2}");
             AtualizarContaMaiorSaldo();
             return _saldo;
         }
 
+        public void Transferir(decimal valor, Conta contaDestino)
+        {
+            if (valor <= 0)
+            {
+                Console.WriteLine("Valor inválido para transferência!");
+                return;
+            }
 
+            if (valor > _saldo)
+            {
+                Console.WriteLine("Saldo insuficiente para transferência!");
+                return;
+            }
+
+            _saldo -= valor;
+            contaDestino._saldo += valor;
+
+            Console.WriteLine($"Transferência de R${valor:F2} realizada com sucesso!");
+            Console.WriteLine($"Saldo da conta {Numero}: R${_saldo:F2}");
+            Console.WriteLine($"Saldo da conta {contaDestino.Numero}: R${contaDestino._saldo:F2}");
+
+            AtualizarContaMaiorSaldo();
+        }
     }
-
-
 }
 
 
